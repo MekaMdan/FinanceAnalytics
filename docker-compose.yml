@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  postgres:
+  db:
     image: postgres:10.5
     restart: always
     env_file:
@@ -10,4 +10,5 @@ services:
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
       # The following files define the db structure
-      - ./sql/01-tickers.sql:/docker-entrypoint-initdb.d/01-tickers.sql
+      - ./sql/01-sector.sql:/docker-entrypoint-initdb.d/01-sector.sql
+      - ./sql/02-tickers.sql:/docker-entrypoint-initdb.d/02-tickers.sql
