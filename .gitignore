@@ -130,3 +130,6 @@ dmypy.json
 
 # Folders
 postgres-data
+
+#Unused files
+recreate-db.sh
