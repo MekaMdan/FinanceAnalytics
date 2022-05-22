@@ -134,3 +134,6 @@ rabbitmq
 
 #Unused files
 recreate-db.sh
+
+#files that should not be public
+database.ini
