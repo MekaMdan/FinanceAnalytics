@@ -1,6 +1,5 @@
 from ..models.db_interface import DbInterface
 from ..models.ticker import Ticker
-from psycopg2 import DatabaseError
 from ..config import config 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
@@ -17,10 +16,15 @@ class PostgresImpl(DbInterface):
         
     def insert_ticker(self, ticker: Ticker) -> TickerOrm:
         try:
-            new_ticker = TickerOrm(ticker)
-            self.db_session.add(new_ticker)
-            self.db_session.commit()
-            return new_ticker
+            exists_in_db = self.db_session.query(TickerOrm).filter_by(
+                ticker_code = ticker.ticker_code).first() is not None
+            if (not exists_in_db):
+                new_ticker = TickerOrm(ticker)
+                self.db_session.add(new_ticker)
+                self.db_session.commit()
+                return new_ticker
+            else:
+                print(f'ticker with code {ticker.ticker_code} already exists')
         except:
             self.db_session.rollback()
 
@@ -39,5 +43,5 @@ class PostgresImpl(DbInterface):
                 f"postgresql://{user}:{password}@{host}:{port}/{database}"
             engine = create_engine(connection_string)
             self.db_session = sessionmaker(engine)()
-        except (Exception, DatabaseError) as error:
+        except (Exception) as error:
             print(error)
