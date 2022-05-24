@@ -7,10 +7,14 @@ class DbInterface:
     implement.
     '''
     def insert_ticker(self, ticker: Ticker):
-        raise NotImplementedError("This method has not been defined yet")
+        raise NotImplementedError("This method will not be implemented in this\
+    abstract class")
 
     def connect_to_db(self):
-        raise NotImplementedError("This method has not been defined yet")
+        raise NotImplementedError("This method will not be implemented in this\
+    abstract class")
         
     def disconnect_db(self):
-        raise NotImplementedError("This method has not been defined yet")
+        raise NotImplementedError("This method will not be implemented in this\
+    abstract class")
+    
