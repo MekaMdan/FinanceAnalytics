@@ -12,8 +12,37 @@ services:
       # The following files define the db structure
       - ./sql/01-sector.sql:/docker-entrypoint-initdb.d/01-sector.sql
       - ./sql/02-tickers.sql:/docker-entrypoint-initdb.d/02-tickers.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
   rabbitmq:
     image: rabbitmq:3-management-alpine
     ports:
       - 5672:5672
       - 15672:15672
+    healthcheck:
+        test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+        interval: 30s
+        timeout: 30s
+        retries: 5
+  ticker-register:
+    build: ./ticker-register
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    links:
+      - rabbitmq
+      - db
+  tickers-scrapper:
+    build: ./tickers-scrapper
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+
+    
