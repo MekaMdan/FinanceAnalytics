@@ -1,4 +1,3 @@
-from typing import List
 from unittest import TestCase, main
 from ..controllers.postgres_impl import PostgresImpl
 from ..models.ticker import Ticker
