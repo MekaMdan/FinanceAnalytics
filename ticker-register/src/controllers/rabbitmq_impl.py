@@ -8,10 +8,11 @@ import json
 class RabbitmqReceiver(MessagerBrokerInterface):
     connection: BlockingConnection
     channel: BlockingChannel
+
     def __init__(self):
         self.connection = None
         self.channel = None
-    
+
     def connect_to_broker(self):
         parameters = config('messager.ini','rabbitmq')
         connection_parameters = ConnectionParameters(
@@ -22,7 +23,17 @@ class RabbitmqReceiver(MessagerBrokerInterface):
         self.connection = BlockingConnection(connection_parameters)
         self.channel = self.connection.channel() 
         self.channel.basic_consume(
-            queue=parameters['queue'],
+            queue=parameters['queue1'],
+            on_message_callback=self.callback, 
+            auto_ack=True
+        )
+        self.channel.basic_consume(
+            queue=parameters['queue2'],
+            on_message_callback=self.callback, 
+            auto_ack=True
+        )
+        self.channel.basic_consume(
+            queue=parameters['queue3'],
             on_message_callback=self.callback, 
             auto_ack=True
         )
@@ -31,5 +42,5 @@ class RabbitmqReceiver(MessagerBrokerInterface):
     
     def callback(self, channel, method, properties, body):
         message = json.loads(body)
-        process(message)
+        process(message, method.routing_key)
         

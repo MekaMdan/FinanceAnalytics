@@ -24,7 +24,7 @@ class PostgresImpl(DbInterface):
                 self.db_session.commit()
                 return new_ticker
             else:
-                print(f'ticker with code {ticker.ticker_code} already exists')
+                print(f'[ERRO] Ticker with code {ticker.ticker_code} already exists')
         except:
             self.db_session.rollback()
 
