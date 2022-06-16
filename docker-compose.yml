@@ -12,6 +12,8 @@ services:
       # The following files define the db structure
       - ./sql/01-sector.sql:/docker-entrypoint-initdb.d/01-sector.sql
       - ./sql/02-tickers.sql:/docker-entrypoint-initdb.d/02-tickers.sql
+      - ./sql/03-prices.sql:/docker-entrypoint-initdb.d/03-prices.sql
+      - ./sql/04-financialstatement.sql:/docker-entrypoint-initdb.d/04-financialstatement.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready"]
       interval: 30s
@@ -44,5 +46,12 @@ services:
         condition: service_healthy
     links:
       - rabbitmq
+  requester:
+    build: ./requester
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq  
 
     
