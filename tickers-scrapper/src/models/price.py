@@ -1,4 +1,5 @@
 import datetime as dt
+from typing import Dict
 
 class Price:
     ticker_code: str
@@ -13,3 +14,10 @@ class Price:
             price_date: {self.price_date}
         )
         '''
+
+    def seriarize(self) -> Dict:
+        return {
+            'ticker_code': self.ticker_code,
+            'price': self.price,
+            'price_date': self.price_date.strftime('%Y-%m-%d')
+        }

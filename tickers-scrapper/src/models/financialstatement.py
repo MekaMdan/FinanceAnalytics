@@ -1,4 +1,5 @@
 import datetime as dt
+from typing import Dict
 
 class FinancialStatement:
     ticker_code: str
@@ -33,3 +34,20 @@ class FinancialStatement:
             liquid_profit: {self.liquid_profit}
         )
         '''
+    
+    def seriarize(self) -> Dict:
+        return {
+            'ticker_code': self.ticker_code,
+            'statement_date': self.statement_date.strftime('%Y-%m-%d'),
+            'stocks_amount': self.stocks_amount,
+            'div_yield': self.div_yield,
+            'assets': self.assets,
+            'disponibility': self.disponibility,
+            'current_assets': self.current_assets,
+            'gross_debt': self.gross_debt,
+            'net_debt': self.net_debt,
+            'liquid_equity': self.liquid_equity,
+            'net_revenue': self.net_revenue,
+            'ebit': self.ebit,
+            'liquid_profit': self.liquid_profit
+        }
