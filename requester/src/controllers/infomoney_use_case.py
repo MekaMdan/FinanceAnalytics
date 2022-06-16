@@ -1,4 +1,3 @@
-from typing import List, Dict
 from ..models.use_case_processor import UseCaseProcessor
 from ..controllers.messager_sender_accessor import MessagerSendAccessor
 import json
