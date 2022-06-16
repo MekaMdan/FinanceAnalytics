@@ -1,7 +1,7 @@
 import datetime as dt
 
 class FinancialStatement:
-    ticker_id: int
+    ticker_code: str
     statement_date: dt.date
     stocks_amount: int
     div_yield: float
@@ -15,21 +15,21 @@ class FinancialStatement:
     ebit: int
     liquid_profit: int
 
-    def __init__(self,ticker_id: int, statement_date: dt.date,
-        stocks_amount: int, div_yield: float,assets: int, disponibility: int,
-        current_assets: int, gross_debt: int, net_debt: int,liquid_equity: int,
-        net_revenue: int, ebit: int, liquid_profit: int):
-
-        self.ticker_id = ticker_id
-        self.statement_date = statement_date
-        self.stocks_amount = stocks_amount
-        self.div_yield = div_yield
-        self.assets = assets
-        self.disponibility = disponibility
-        self.current_assets = current_assets
-        self.gross_debt = gross_debt
-        self.net_debt = net_debt
-        self.liquid_equity = liquid_equity
-        self.net_revenue = net_revenue
-        self.ebit = ebit
-        self.liquid_profit = liquid_profit
+    def __repr__(self) -> str:
+        return f'''
+        FinancialStatement(
+            ticker_code: {self.ticker_code},
+            statement_date: {self.statement_date},
+            stocks_amount: {self.stocks_amount},
+            div_yield: {self.div_yield},
+            assets: {self.assets},
+            disponibility: {self.disponibility},
+            current_assets: {self.current_assets},
+            gross_debt: {self.gross_debt},
+            net_debt: {self.net_debt},
+            liquid_equity: {self.liquid_equity},
+            net_revenue: {self.net_revenue},
+            ebit: {self.ebit},
+            liquid_profit: {self.liquid_profit}
+        )
+        '''
