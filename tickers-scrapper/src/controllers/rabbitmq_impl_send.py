@@ -21,16 +21,11 @@ class RabbitmqSend(MessagerBrokerInterfaceSend):
         self.connection = BlockingConnection(connection_parameters)
         self.channel = self.connection.channel()
 
-        self.channel.queue_declare(
-            queue=parameters['queue_send'],
-            durable=True
-            )
-
-    def send_message(self, message_body: str):
+    def send_message(self, message_body: str, routingkey: str):
         parameters = config('messager.ini','rabbitmq')
         self.channel.basic_publish(
             exchange=parameters['exchange_send'],
-            routing_key=parameters['routing_key'],
+            routing_key=routingkey,
             body=message_body
         )
         print(f'[INFO] Sent {message_body}')
