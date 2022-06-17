@@ -1,5 +1,6 @@
 from .ticker import Ticker
-
+from .price import Price
+from .financialstatement import FinancialStatement
 
 class DbInterface:
     '''
@@ -7,6 +8,14 @@ class DbInterface:
     implement.
     '''
     def insert_ticker(self, ticker: Ticker):
+        raise NotImplementedError("This method will not be implemented in this\
+    abstract class")
+
+    def insert_price(self, price: Price):
+        raise NotImplementedError("This method will not be implemented in this\
+    abstract class")
+
+    def insert_statement(self, f_statement: FinancialStatement):
         raise NotImplementedError("This method will not be implemented in this\
     abstract class")
 

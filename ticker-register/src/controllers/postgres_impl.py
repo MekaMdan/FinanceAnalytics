@@ -1,9 +1,13 @@
 from ..models.db_interface import DbInterface
 from ..models.ticker import Ticker
 from ..config import config 
-from sqlalchemy import create_engine
+from sqlalchemy import and_, create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from ..controllers.ticker_orm import TickerOrm
+from ..models.price import Price
+from ..controllers.price_orm import PriceOrm
+from ..models.financialstatement import FinancialStatement
+from ..controllers.financialstatement_orm import FinancialStatementOrm
 
 class PostgresImpl(DbInterface):
     '''
@@ -24,8 +28,31 @@ class PostgresImpl(DbInterface):
                 self.db_session.commit()
                 return new_ticker
             else:
-                print(f'[ERRO] Ticker with code {ticker.ticker_code} already exists')
-        except:
+                print(f'[INFO] Ticker with code {ticker.ticker_code} already exists')
+        except Exception as error:
+            print(error)
+            self.db_session.rollback()
+
+    def insert_price(self, price:Price) -> PriceOrm:
+        try:
+            ticker= self.db_session.query(TickerOrm).filter_by(
+                ticker_code = price.ticker_code).first()
+            if(ticker is None):
+                raise Exception("Inexistent ticker")
+            exists_in_db = self.db_session.query(PriceOrm).filter(
+                and_(
+                    PriceOrm.ticker_id==ticker.id, 
+                    PriceOrm.price_date==price.price_date)
+            ).first() is not None
+            if (not exists_in_db):
+                new_price = PriceOrm(price, ticker.id)
+                self.db_session.add(new_price)
+                self.db_session.commit()
+                return new_price
+            else:
+                print(f'[INFO] data already exists')
+        except Exception as error:
+            print(error)
             self.db_session.rollback()
 
     def connect_to_db(self):
