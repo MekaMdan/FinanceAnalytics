@@ -1,4 +1,5 @@
-CREATE TABLE IF NOT EXISTS financialstatement (
+CREATE TABLE IF NOT EXISTS financialstatements (
+    id INT PRIMARY KEY generated always as identity,
     ticker_id INT REFERENCES tickers(id) NOT NULL,
     statement_date DATE,
     stocks_amount INT NOT NULL,
@@ -11,6 +12,5 @@ CREATE TABLE IF NOT EXISTS financialstatement (
     liquid_equity BIGINT,
     net_revenue BIGINT,
     ebit BIGINT,
-    liquid_profit BIGINT,
-    PRIMARY KEY(last_statement_date, ticker_id)
+    liquid_profit BIGINT
 );
