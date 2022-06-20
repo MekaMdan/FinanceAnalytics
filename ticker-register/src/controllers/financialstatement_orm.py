@@ -36,3 +36,23 @@ class FinancialStatementOrm(Base):
         self.ebit = f_statement.ebit
         self.liquid_profit = f_statement.liquid_profit
         self.ticker_id = ticker_id
+
+    def __repr__(self) -> str:
+        return f'''
+        FinancialStatement(
+            id: {self.id}
+            ticker_code: {self.ticker.ticker_code},
+            statement_date: {self.statement_date},
+            stocks_amount: {self.stocks_amount},
+            div_yield: {self.div_yield},
+            assets: {self.assets},
+            disponibility: {self.disponibility},
+            current_assets: {self.current_assets},
+            gross_debt: {self.gross_debt},
+            net_debt: {self.net_debt},
+            liquid_equity: {self.liquid_equity},
+            net_revenue: {self.net_revenue},
+            ebit: {self.ebit},
+            liquid_profit: {self.liquid_profit}
+        )
+        '''

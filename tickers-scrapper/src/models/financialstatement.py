@@ -35,7 +35,7 @@ class FinancialStatement:
         )
         '''
     
-    def seriarize(self) -> Dict:
+    def serialize(self) -> Dict:
         return {
             'ticker_code': self.ticker_code,
             'statement_date': self.statement_date.strftime('%Y-%m-%d'),
