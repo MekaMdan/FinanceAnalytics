@@ -21,7 +21,7 @@ class Ticker:
         return f"Ticker({self.ticker_code}, {self.enterprise_name},\
 {self.sector_id})"
 
-    def seriarize(self) -> Dict:
+    def serialize(self) -> Dict:
         return {
             'ticker_code':self.ticker_code, 
             'enterprise_name':self.enterprise_name,
