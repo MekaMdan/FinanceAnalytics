@@ -55,6 +55,28 @@ class PostgresImpl(DbInterface):
             print(error)
             self.db_session.rollback()
 
+    def insert_statement(self, f_statement: FinancialStatement) -> FinancialStatementOrm:
+        try:
+            ticker = self.db_session.query(TickerOrm).filter_by(
+                ticker_code = f_statement.ticker_code).first()
+            if(ticker is None):
+                raise Exception("Inexistent ticker")
+            exists_in_db = self.db_session.query(FinancialStatementOrm).filter(
+                and_(
+                    FinancialStatementOrm.ticker_id==ticker.id, 
+                    FinancialStatementOrm.statement_date==f_statement.statement_date)
+            ).first() is not None
+            if (not exists_in_db):
+                new_fstatement = FinancialStatementOrm(f_statement, ticker.id)
+                self.db_session.add(new_fstatement)
+                self.db_session.commit()
+                return new_fstatement
+            else:
+                print(f'[INFO] data already exists')
+        except Exception as error:
+            print(error)
+            self.db_session.rollback()
+            
     def connect_to_db(self):
         try:
             # read connection parameters
