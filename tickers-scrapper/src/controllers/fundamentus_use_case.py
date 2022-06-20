@@ -9,13 +9,17 @@ class FundamentusUseCase(UseCaseProcessor):
         
         broker = MessagerSendAccessor.get_impl('rabbitmq')
         scrapper = FundamentusScrapper()
-        price, financialstatement = scrapper.scrap(message)
+        try:
+            price, financialstatement = scrapper.scrap(message)
 
-        serialized_price = price.seriarize()
-        serialized_financialstatement = financialstatement.seriarize()
-        
-        message_to_send = json.dumps(serialized_price)
-        broker.send_message(message_to_send, 'price')
-        
-        message_to_send = json.dumps(serialized_financialstatement)
-        broker.send_message(message_to_send, 'statement')
+            serialized_price = price.serialize()
+            serialized_financialstatement = financialstatement.serialize()
+
+            message_to_send = json.dumps(serialized_price)
+            broker.send_message(message_to_send, 'price')
+
+            message_to_send = json.dumps(serialized_financialstatement)
+            broker.send_message(message_to_send, 'statement')
+
+        except Exception as e:
+            print(str(e))

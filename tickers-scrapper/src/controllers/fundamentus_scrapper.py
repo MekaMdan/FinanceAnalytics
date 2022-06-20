@@ -40,14 +40,15 @@ class FundamentusScrapper(ScrapperInterface):
 
         except Exception as e:
             print("Erro %s ao ler a pagina", str(e))
+            raise Exception("paper indisponivel")
 
         return (self.price, self.financialstatement)
 
     def _parse_price(self, table: ResultSet):
         # get cotação
         price_finder = table.find('td', attrs={"class":"data destaque w3"})
-        price = price_finder.find('span').getText().replace(',','.')
-        self.price.price = float(price)
+        price_value = price_finder.find('span').getText().replace(',','.')
+        self.price.price_value = float(price_value)
         
         # get cotação data
         next_finder = price_finder.find_next('td', attrs={"class":"data"})

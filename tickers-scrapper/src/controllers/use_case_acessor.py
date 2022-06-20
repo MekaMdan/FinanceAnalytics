@@ -13,6 +13,5 @@ class UseCaseAcessor(AccessorInterface):
             "fundamentus": FundamentusUseCase
         }
 
-        if (not UseCaseAcessor.use_case_instance):
-            UseCaseAcessor.use_case_instance = available_use_cases[choosen_use_case]
+        UseCaseAcessor.use_case_instance = available_use_cases[choosen_use_case]
         return UseCaseAcessor.use_case_instance

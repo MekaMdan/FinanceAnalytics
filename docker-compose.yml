@@ -51,7 +51,10 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+      db:
+        condition: service_healthy
     links:
-      - rabbitmq  
+      - rabbitmq
+      - db  
 
     

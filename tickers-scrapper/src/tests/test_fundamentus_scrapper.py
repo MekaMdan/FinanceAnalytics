@@ -5,6 +5,7 @@ class TestFundamentusScrapper(TestCase):
     def test_scrapper(self):
         scrapper = FundamentusScrapper()
         message = {
+            "source":"fundamentus",
             "ticker_name":"CAML3"
         }
         price, financialstatement = scrapper.scrap(message)
@@ -19,7 +20,7 @@ class TestFundamentusScrapper(TestCase):
             "financial statement is null"
         )
 
-        print(price)
+        print(price.serialize())
         print(financialstatement)
 
 if __name__ == '__main__':
