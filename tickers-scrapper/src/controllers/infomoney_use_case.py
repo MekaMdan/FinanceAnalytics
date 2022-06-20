@@ -14,6 +14,6 @@ class InfomoneyUseCase(UseCaseProcessor):
         list_tickers:List[Ticker] = scrapper.scrap()
 
         for ticker in list_tickers:
-            serialized_ticker = ticker.seriarize()
+            serialized_ticker = ticker.serialize()
             message_to_send = json.dumps(serialized_ticker)
             broker.send_message(message_to_send,'ticker')
