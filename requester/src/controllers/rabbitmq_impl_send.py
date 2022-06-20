@@ -16,15 +16,15 @@ class RabbitmqSend(MessagerBrokerInterfaceSend):
         connection_parameters = ConnectionParameters(
             host = parameters['host'],
             port = parameters['port'],
-            virtual_host=parameters['virtual_host_send']
-        )
+            virtual_host=parameters['virtual_host']
+        ) 
         self.connection = BlockingConnection(connection_parameters)
         self.channel = self.connection.channel()
 
-    def send_message(self, message_body: str, routingkey: str):
+    def send_message(self, message_body: str, routingkey:str):
         parameters = config('messager.ini','rabbitmq')
         self.channel.basic_publish(
-            exchange=parameters['exchange_send'],
+            exchange=parameters['exchange'],
             routing_key=routingkey,
             body=message_body
         )

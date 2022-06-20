@@ -18,11 +18,5 @@ class TickerOrm(Base):
         self.sector_id = ticker.sector_id
 
     def __repr__(self) -> str:
-        return f'''
-        Ticker(
-            id: {self.id}, 
-            ticker_code: {self.ticker_code}, 
-            enterprise_name: {self.enterprise_name},
-            sector: {self.sector.sector_name}
-        )
-        '''
+        return f"Ticker({self.id}, {self.ticker_code}, {self.enterprise_name},\
+{self.sector.sector_name})"

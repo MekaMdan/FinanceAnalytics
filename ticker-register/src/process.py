@@ -1,12 +1,9 @@
 from .controllers.db_accessor import DbAccessor
+from .controllers.use_case_acessor import UseCaseAcessor
 from typing import Dict
-from .models.ticker import Ticker
 
-def process(message: Dict):
+def process(message: Dict, routing_key: str):
     db = DbAccessor.get_impl('postgresql')
-    new_ticker = Ticker(
-        message['ticker_code'],
-        message['enterprise_name'],
-        message['sector_id']
-    )
-    db.insert_ticker(new_ticker)
+    print(routing_key)
+    usecase = UseCaseAcessor.get_impl(routing_key)()
+    usecase.process(db, message)

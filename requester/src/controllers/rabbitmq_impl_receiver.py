@@ -1,14 +1,13 @@
 from ..process import process
 from ..config import config
-from ..models.messager_broker_inteface import MessagerBrokerInterface
+from ..models.messager_broker_interface_receiver import MessagerBrokerInterfaceReceiver
 from pika import BlockingConnection, ConnectionParameters
 from pika.adapters.blocking_connection import BlockingChannel
 import json
 
-class RabbitmqReceiver(MessagerBrokerInterface):
+class RabbitmqReceiver(MessagerBrokerInterfaceReceiver):
     connection: BlockingConnection
     channel: BlockingChannel
-
     def __init__(self):
         self.connection = None
         self.channel = None
@@ -23,24 +22,13 @@ class RabbitmqReceiver(MessagerBrokerInterface):
         self.connection = BlockingConnection(connection_parameters)
         self.channel = self.connection.channel() 
         self.channel.basic_consume(
-            queue=parameters['queue1'],
-            on_message_callback=self.callback, 
-            auto_ack=True
-        )
-        self.channel.basic_consume(
-            queue=parameters['queue2'],
-            on_message_callback=self.callback, 
-            auto_ack=True
-        )
-        self.channel.basic_consume(
-            queue=parameters['queue3'],
+            queue=parameters['queue_receive'],
             on_message_callback=self.callback, 
             auto_ack=True
         )
         print(' [*] Waiting for messages. To exit press CTRL+C')
         self.channel.start_consuming()
     
-    def callback(self, channel, method, properties, body):
+    def callback(self, _channel, _method, _properties, body):
         message = json.loads(body)
-        process(message, method.routing_key)
-        
+        process(message)
