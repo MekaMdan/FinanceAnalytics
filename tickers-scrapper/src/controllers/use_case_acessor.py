@@ -12,6 +12,5 @@ class UseCaseAcessor(AccessorInterface):
             "infomoney": InfomoneyUseCase,
             "fundamentus": FundamentusUseCase
         }
-
         UseCaseAcessor.use_case_instance = available_use_cases[choosen_use_case]
         return UseCaseAcessor.use_case_instance
