@@ -12,9 +12,7 @@ class UseCaseAcessor(AccessorInterface):
             "infomoney": InfomoneyUseCase,
             "fundamentus": FundamentusUseCase
         }
-
-        if (not UseCaseAcessor.use_case_instance):
-            UseCaseAcessor.use_case_instance = available_use_cases[choosen_instance]
+        UseCaseAcessor.use_case_instance = available_use_cases[choosen_instance]
         return UseCaseAcessor.use_case_instance
 
         

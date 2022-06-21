@@ -17,7 +17,8 @@ class RabbitmqReceiver(MessagerBrokerInterfaceReceiver):
         connection_parameters = ConnectionParameters(
             host = parameters['host'],
             port = parameters['port'],
-            virtual_host=parameters['virtual_host_receiver']
+            virtual_host=parameters['virtual_host_receiver'],
+            heartbeat=0
         )
         self.connection = BlockingConnection(connection_parameters)
         self.channel = self.connection.channel() 
