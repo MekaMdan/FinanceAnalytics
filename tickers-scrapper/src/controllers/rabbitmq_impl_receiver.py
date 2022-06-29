@@ -12,13 +12,13 @@ class RabbitmqReceiver(MessagerBrokerInterfaceReceiver):
         self.connection = None
         self.channel = None
 
+
     def connect_to_broker(self):
         parameters = config('messager.ini','rabbitmq')
         connection_parameters = ConnectionParameters(
             host = parameters['host'],
             port = parameters['port'],
-            virtual_host=parameters['virtual_host_receiver'],
-            heartbeat=0
+            virtual_host=parameters['virtual_host_receiver']
         )
         self.connection = BlockingConnection(connection_parameters)
         self.channel = self.connection.channel() 
